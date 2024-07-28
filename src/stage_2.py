@@ -42,7 +42,7 @@ class CalculateBeam:
 
 
 if __name__ == "__main__":
-    processed_data = PrepareQ(loads_1).sorted_loads
+    processed_data = Prepare_Q(loads_1).sorted_loads
     CalculateBeam(loads=processed_data)
 
 

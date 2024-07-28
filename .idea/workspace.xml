@@ -5,7 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="6c53bc29-acf3-4332-8e10-1543c533b4f9" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/stage_0.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/stage_0.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/stage_1.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/stage_1.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/stage_2.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/stage_2.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -24,29 +27,29 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Python.Eq_solver.executor": "Run",
-    "Python.Forces.executor": "Run",
-    "Python.Simple_Beam.executor": "Run",
-    "Python.main.executor": "Run",
-    "Python.mozak.executor": "Run",
-    "Python.proba.executor": "Run",
-    "Python.stage_0.executor": "Run",
-    "Python.stage_1.executor": "Run",
-    "Python.stage_2.executor": "Run",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "master",
-    "last_opened_file_path": "/home/josip/PycharmProjects/mechanics_app/src",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "settings.editor.selected.configurable": "com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Python.Eq_solver.executor&quot;: &quot;Run&quot;,
+    &quot;Python.Forces.executor&quot;: &quot;Run&quot;,
+    &quot;Python.Simple_Beam.executor&quot;: &quot;Run&quot;,
+    &quot;Python.main.executor&quot;: &quot;Run&quot;,
+    &quot;Python.mozak.executor&quot;: &quot;Run&quot;,
+    &quot;Python.proba.executor&quot;: &quot;Run&quot;,
+    &quot;Python.stage_0.executor&quot;: &quot;Run&quot;,
+    &quot;Python.stage_1.executor&quot;: &quot;Run&quot;,
+    &quot;Python.stage_2.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/home/josip/PycharmProjects/mechanics_app/src&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/src" />
@@ -56,7 +59,7 @@
       <recent name="$PROJECT_DIR$/src" />
     </key>
   </component>
-  <component name="RunManager" selected="Python.stage_2">
+  <component name="RunManager" selected="Python.stage_1">
     <configuration name="Simple_Beam" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="mechanics_app" />
       <option name="ENV_FILES" value="" />
@@ -197,10 +200,10 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Python.stage_1" />
         <item itemvalue="Python.stage_2" />
         <item itemvalue="Python.Simple_Beam" />
         <item itemvalue="Python.stage_0" />
-        <item itemvalue="Python.stage_1" />
         <item itemvalue="Python.mozak" />
       </list>
     </recent_temporary>
@@ -225,7 +228,8 @@
       <workItem from="1722040500137" duration="2504000" />
       <workItem from="1722105039850" duration="1323000" />
       <workItem from="1722107006420" duration="788000" />
-      <workItem from="1722153089836" duration="15718000" />
+      <workItem from="1722153089836" duration="19719000" />
+      <workItem from="1722283360935" duration="3464000" />
     </task>
     <servers />
   </component>
@@ -234,13 +238,13 @@
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/mechanics_app$Simple_Beam.coverage" NAME="Simple_Beam Coverage Results" MODIFIED="1722198639999" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/mechanics_app$stage_1.coverage" NAME="stage_1 Coverage Results" MODIFIED="1722195869296" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src" />
+    <SUITE FILE_PATH="coverage/mechanics_app$stage_1.coverage" NAME="stage_1 Coverage Results" MODIFIED="1722286811863" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src" />
     <SUITE FILE_PATH="coverage/mechanics_app$main.coverage" NAME="main Coverage Results" MODIFIED="1722191985332" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/mechanics_app$stage_0.coverage" NAME="stage_0 Coverage Results" MODIFIED="1722196129563" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src" />
     <SUITE FILE_PATH="coverage/mechanics_app$Eq_solver.coverage" NAME="Eq_solver Coverage Results" MODIFIED="1722041916914" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/mechanics_app$Forces.coverage" NAME="Forces Coverage Results" MODIFIED="1722038687431" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/mechanics_app$proba.coverage" NAME="proba Coverage Results" MODIFIED="1722105295386" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src" />
     <SUITE FILE_PATH="coverage/mechanics_app$mozak.coverage" NAME="mozak Coverage Results" MODIFIED="1722191556464" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/sustav" />
-    <SUITE FILE_PATH="coverage/mechanics_app$stage_2.coverage" NAME="stage_2 Coverage Results" MODIFIED="1722199181129" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src" />
+    <SUITE FILE_PATH="coverage/mechanics_app$stage_2.coverage" NAME="stage_2 Coverage Results" MODIFIED="1722285606947" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src" />
   </component>
 </project>
