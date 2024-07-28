@@ -24,7 +24,7 @@ beam_geometry = {
 
 """
 
-treba dodati za q komponente ekvivalent Q, kako bi suma sila u solveru funcktionirala 
+treba dodati za q komponente ekvivalent Q, kako bi suma sila u solveru bila ok 
 
 
 
