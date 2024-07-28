@@ -1,4 +1,3 @@
-import idlelib.replace
 
 
 def komba(f1, f2):

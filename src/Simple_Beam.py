@@ -21,13 +21,31 @@ import numpy as np
 
 
 
-
-"ja"
 Data = {
     # "Beam": [0,6],              # Duljina grede
     "S": [2,5, 6],                 # Supports
     "F": {0:-2, 1:-1, 5:-5},          # Forces
 }
+
+
+# Fixed end
+
+
+d_1 = {
+    "Beam": [0,6],              # Duljina grede
+
+    "S": [2,5, 6],                 # Supports
+    
+
+
+    "F": {0: -2, 1: -1, 5: -5},          # Forces
+
+
+
+
+}
+
+
 
 
 
@@ -92,28 +110,6 @@ class SimpleBeam:
         X, residuals, rank, s = np.linalg.lstsq(self.Matrix_eq, self.Matrix_sum, rcond=None)
 
         print(X)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 a = SimpleBeam()
