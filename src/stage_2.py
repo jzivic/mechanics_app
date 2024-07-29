@@ -60,7 +60,7 @@ class CalculateBeam:
 
     def momentum_equation(self):
 
-        OVO SE TEBA NAPRAVIT
+        OVO SE TEBA NAPRAVITI
 
 
 
