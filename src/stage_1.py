@@ -85,51 +85,39 @@ class LinearEquation:
 
 
 
-class Prepare_Q:
+class Prepare_Loads:
     def __init__(self, load_dict):
         self.load_dict = load_dict
         self.sorted_loads = self.sort_decompose_loads()
 
     def sort_decompose_loads(self):
+
+        # sve sile sortirane po poziciji. Ako je kont opterećenje, sorira se po prvoj dimenziji
         sorted_forces_loads = dict(sorted(self.load_dict.items(), key=lambda x:
             x[1]["position"][0] if x[1]["type"] == "q" else x[1]["position"]))
-
-
-        # decompose F and q into x and y components
-        for dec in sorted_forces_loads:
-
-            # if sorted_forces_loads[dec]["type"] == "F":
-            #     sorted_forces_loads[dec]["F_x"], sorted_forces_loads[dec]["F_y"] = (
-            #         HelpF.decompose_force( sorted_forces_loads[dec]["value"],
-            #                                sorted_forces_loads[dec]["angle"] ))
-
-            if sorted_forces_loads[dec]["type"] == "q":
-                # sorted_forces_loads[dec]["q_x"], sorted_forces_loads[dec]["q_y"] = (
-                #     HelpF.decompose_force( sorted_forces_loads[dec]["value"],
-                #                            sorted_forces_loads[dec]["angle"]))
-
-
-                sorted_forces_loads[dec]["F_equiv"], sorted_forces_loads[dec]["weight_center"] \
-                    = HelpF.transfor_q_to_F(sorted_forces_loads[dec])
-
-
-
-
 
         f_loads = {key: value for key, value in sorted_forces_loads.items() if value.get("type") == "F"}
         q_loads = {key: value for key, value in sorted_forces_loads.items() if value.get("type") == "q"}
 
 
+
         for key in q_loads:
+
+            # dodaje se ekvivalentna sila koja može zamijeniti q, F_eqv, kao i njeno težište
+            sorted_forces_loads[key]["F_eqv"], sorted_forces_loads[key]["x_F_eqv"] \
+                = HelpF.transfor_q_to_F(sorted_forces_loads[key])
+
             x_start = sorted_forces_loads[key]["position"][0]
             x_end = sorted_forces_loads[key]["position"][1]
-            value = sorted_forces_loads[key]["value"]
-
 
             # if there is a F within q range, x_in_q will store the location
             x_in_q = [x_start]
+
+            # ako posotji neka sila F unutar kontinuiranog opterećenja dodaje se u x_in_q varijablu
             x_in_q += [sorted_forces_loads[x]["position"] for x in f_loads if x_start < f_loads[x]["position"] < x_end]
             x_in_q.append(x_end)
+
+            # dict u koji se dodaju
             dict_append = {}
             q_org = sorted_forces_loads[key]
 
@@ -143,12 +131,6 @@ class Prepare_Q:
 
             sorted_forces_loads.pop(key)
             sorted_forces_loads.update(dict_append)
-
-
-            f = value * (x_end - x_start)
-            print(f)
-
-
 
         sorted_loads = dict(sorted(sorted_forces_loads.items(),
                                    key=lambda x: x[1]["position"][0] if x[1]["type"] == "q" else x[1]["position"]))
@@ -167,4 +149,4 @@ class Prepare_Q:
 
 
 if __name__ == "__main__":
-    Prepare_Q(load_dict=loads_1)
+    Prepare_Loads(load_dict=loads_1)
