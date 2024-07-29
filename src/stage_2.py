@@ -59,8 +59,12 @@ class CalculateBeam:
 
 
     def momentum_equation(self):
+        #kurton
+        ...
 
-        OVO SE TEBA NAPRAVITI
+
+
+
 
 
 
