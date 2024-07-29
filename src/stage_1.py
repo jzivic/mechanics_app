@@ -109,7 +109,7 @@ class Prepare_Q:
                 #                            sorted_forces_loads[dec]["angle"]))
 
 
-                sorted_forces_loads[dec]["F_eq"], sorted_forces_loads[dec]["x_center"] \
+                sorted_forces_loads[dec]["F_equiv"], sorted_forces_loads[dec]["weight_center"] \
                     = HelpF.transfor_q_to_F(sorted_forces_loads[dec])
 
 
