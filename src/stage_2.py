@@ -2,7 +2,7 @@ import math
 from stage_1 import *
 from stage_0 import *
 
-
+import numpy as np
 
 
 
@@ -18,7 +18,7 @@ class CalculateBeam:
         self.matrix_sum = []
         self.f_values, self.f_locations = self.forces_equation()
         self.momentum_equation()
-
+        self.calculate_matrix()
 
 
 
@@ -42,7 +42,7 @@ class CalculateBeam:
                 f_locations.append(self.sorted_loads[key]["x_F_eqv"])
                 sum_Q += self.sorted_loads[key]["F_eqv"]
 
-        self.matrix_sum.append(sum_Q)
+        self.matrix_sum.append([sum_Q])
 
         return f_values, f_locations
 
@@ -50,26 +50,22 @@ class CalculateBeam:
 
     def momentum_equation(self):
 
-
         # lokacije točaka gdje će se postaviti momentne jednadžbe ( u osloncima )
         locations = [value["location"] for key, value in beam_geometry.items() if key != "length"]
 
-
-
         # ide po potrebnom broju momentnih jednadžbi i postavlja momentne jednadžbe
         for x_pos in range(self.num_of_M_eq):
-            M_eq = [i - x_pos for i in locations]
+            M_eq = [i - x_pos for i in locations]       # momentna jednadža u koeficijentima
+            self.matrix_eq.append(M_eq)
+
             M_sum = [sum((i-x_pos)*j for i,j in zip( self.f_locations, self.f_values))]
+            self.matrix_sum.append(M_sum)
+
+    def calculate_matrix(self):
+        X, residuals, rank, s = np.linalg.lstsq(self.matrix_eq, self.matrix_sum, rcond=None)
 
 
-
-
-
-
-
-
-
-
+        print(s)
 
 
 
