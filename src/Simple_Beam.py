@@ -90,6 +90,9 @@ class SimpleBeam:
             x_pos = n_equation
 
             M_eq = [i-x_pos for i in Data["S"]]
+
+            print(M_eq)
+
             M_sum = [sum((i-x_pos)*j for i,j in zip(F_locations, F_values))]
 
             self.Matrix_eq.append(M_eq)
@@ -109,7 +112,6 @@ class SimpleBeam:
         # metoda najmanjih kvadrata
         X, residuals, rank, s = np.linalg.lstsq(self.Matrix_eq, self.Matrix_sum, rcond=None)
 
-        print(X)
 
 
 a = SimpleBeam()

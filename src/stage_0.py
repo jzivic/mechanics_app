@@ -16,7 +16,8 @@ loads_1 = {
 beam_geometry = {
         "length": [0,10],
         "S1": {"x": True, "y": True, "location": 0},
-        "S2": {"x": True, "y": True, "location": 10}
+        "S2": {"x": True, "y": True, "location": 5},
+        "S3": {"x": True, "y": True, "location": 10}
 }
 
 

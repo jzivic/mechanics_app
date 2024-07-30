@@ -5,19 +5,10 @@ from stage_0 import *
 
 
 
-beam_geometry = {
-        "length": [0,10],
-        "S1": {"x": True, "y": True, "location": 0},
-        "S2": {"x": True, "y": True, "location": 10}
-}
-
 
 
 class CalculateBeam:
     def __init__(self, sorted_loads):
-
-        print(sorted_loads)
-
         self.sorted_loads = sorted_loads
 
         # broj momentnih jednadžbi ovisi o broju oslonaca u y smjeru
@@ -25,7 +16,8 @@ class CalculateBeam:
                                 and beam_geometry[support]["y"] is True]) - 1
         self.matrix_eq = []
         self.matrix_sum = []
-        self.forces_equation()
+        self.f_values, self.f_locations = self.forces_equation()
+        self.momentum_equation()
 
 
 
@@ -37,62 +29,38 @@ class CalculateBeam:
 
         # sumna poprečnih sila (F i preračunatih q)
         sum_Q = 0
-
-
-
-
         f_values, f_locations = [], []
         for key in self.sorted_loads:
 
             if self.sorted_loads[key]["type"] == "F":
                 f_values.append(self.sorted_loads[key]["value"])
-                f_locations.append(self.sorted_loads[key]["positions"])
-
+                f_locations.append(self.sorted_loads[key]["position"])
                 sum_Q += self.sorted_loads[key]["value"]
 
             elif self.sorted_loads[key]["type"] == "q":
+                f_values.append(self.sorted_loads[key]["F_eqv"])
+                f_locations.append(self.sorted_loads[key]["x_F_eqv"])
                 sum_Q += self.sorted_loads[key]["F_eqv"]
 
         self.matrix_sum.append(sum_Q)
 
+        return f_values, f_locations
 
 
 
     def momentum_equation(self):
-        #kurton
-        ...
+
+
+        # lokacije točaka gdje će se postaviti momentne jednadžbe ( u osloncima )
+        locations = [value["location"] for key, value in beam_geometry.items() if key != "length"]
 
 
 
+        # ide po potrebnom broju momentnih jednadžbi i postavlja momentne jednadžbe
+        for x_pos in range(self.num_of_M_eq):
+            M_eq = [i - x_pos for i in locations]
+            M_sum = [sum((i-x_pos)*j for i,j in zip( self.f_locations, self.f_values))]
 
-
-
-
-
-
-
-
-"""
-
-
-    Data = {
-        # "Beam": [0,6],              # Duljina grede
-        "S": [2, 5, 6],  # Supports
-        "F": {0: -2, 1: -1, 5: -5},  # Forces
-    }
-    def momentum_equation(self):
-
-        F_locations = list(Data["F"].keys())
-        F_values = list(Data["F"].values())
-
-        for n_equation in range(self.num_of_M_eq):
-            x_pos = n_equation
-
-            M_eq = [i-x_pos for i in Data["S"]]
-            M_sum = [sum((i-x_pos)*j for i,j in zip(F_locations, F_values))]
-
-            self.Matrix_eq.append(M_eq)
-            self.Matrix_sum.append(M_sum)"""
 
 
 
@@ -115,5 +83,6 @@ if __name__ == "__main__":
     CalculateBeam(sorted_loads=processed_data)
 
 
+    # print(processed_data)
 
 
