@@ -32,10 +32,6 @@ class HelpF:
         return f, w_c
 
 
-
-
-
-
 class LinearEquation:
     def __init__(self, A, B, x):
         self.A = A
@@ -64,24 +60,6 @@ class LinearEquation:
 
     def get_value(self):
         return self.result
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
