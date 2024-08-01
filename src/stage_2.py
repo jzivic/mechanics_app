@@ -1,6 +1,6 @@
 import math
-from stage_1 import *
 from stage_0 import *
+from stage_1 import *
 
 import numpy as np
 
@@ -19,8 +19,6 @@ class CalculateBeam:
         self.f_values, self.f_locations = self.forces_equation()
         self.momentum_equation()
         self.calculate_matrix()
-
-
 
     def forces_equation(self):
 
@@ -47,12 +45,23 @@ class CalculateBeam:
 
         return f_values, f_locations
 
-
-
     def momentum_equation(self):
 
         # lokacije točaka gdje će se postaviti momentne jednadžbe ( u osloncima )
-        locations = [value["location"] for key, value in beam_geometry.items() if key != "length"]
+        locations = [value["location"] for key, value in beam_geometry.items() if key != "length" ]
+
+
+
+        # ovo treba sreditida ne dodaje jednadžbe  za momente
+"""        self.num_of_M_eq < len(locations)
+        locations = [key for key, value in beam_geometry.items() if key != "length" ]
+        locations = list(tuple(locations))
+"""
+
+
+        print(locations)
+
+
 
         # ide po potrebnom broju momentnih jednadžbi i postavlja momentne jednadžbe
         for x_pos in range(self.num_of_M_eq):
