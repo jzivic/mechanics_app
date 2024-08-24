@@ -1,8 +1,8 @@
 import math
 from stage_0 import *
 from stage_1 import *
-
 import numpy as np
+
 
 
 
@@ -14,11 +14,13 @@ class CalculateBeam:
         # broj momentnih jednadžbi ovisi o broju oslonaca u y smjeru
         self.num_of_M_eq = len([1 for support in beam_geometry if support != "length"
                                 and beam_geometry[support]["y"] is True]) - 1
+
         self.matrix_eq = []
         self.matrix_sum = []
         self.f_values, self.f_locations = self.forces_equation()
         self.momentum_equation()
         self.calculate_matrix()
+
 
     def forces_equation(self):
 
@@ -45,22 +47,12 @@ class CalculateBeam:
 
         return f_values, f_locations
 
+
     def momentum_equation(self):
 
         # lokacije točaka gdje će se postaviti momentne jednadžbe ( u osloncima )
-        locations = [value["location"] for key, value in beam_geometry.items() if key != "length" ]
-
-
-
-        # ovo treba sreditida ne dodaje jednadžbe  za momente
-"""        self.num_of_M_eq < len(locations)
-        locations = [key for key, value in beam_geometry.items() if key != "length" ]
-        locations = list(tuple(locations))
-"""
-
-
-        print(locations)
-
+        locations = [value["location"] for key, value in beam_geometry.items() if key != "length"
+                     and value["y"] is True ]
 
 
         # ide po potrebnom broju momentnih jednadžbi i postavlja momentne jednadžbe
@@ -74,7 +66,18 @@ class CalculateBeam:
     def calculate_matrix(self):
         X, residuals, rank, s = np.linalg.lstsq(self.matrix_eq, self.matrix_sum, rcond=None)
 
+
+
+
 if __name__ == "__main__":
     processed_data = Prepare_Loads(loads_1).sorted_loads
     CalculateBeam(sorted_loads=processed_data)
 
+
+
+
+        # ovo treba sreditida ne dodaje jednadžbe  za momente
+"""        self.num_of_M_eq < len(locations)
+        locations = [key for key, value in beam_geometry.items() if key != "length" ]
+        locations = list(tuple(locations))
+"""

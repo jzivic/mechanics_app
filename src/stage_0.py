@@ -18,8 +18,14 @@ beam_geometry = {
         "length": [0,10],
         "S1": {"x": True, "y": True, "M": False,  "location": 2},
         "S2": {"x": True, "y": True, "M": False, "location": 10},
-        "S3": {"x": False, "y": False, "M": True, "location": 10}
+        "S3": {"x": False, "y": False, "M": True, "location": 10}       # NEAKTIVNO
 }
+
+
+
+
+
+
 
 
 
@@ -27,9 +33,6 @@ beam_geometry = {
 """
 
 treba dodati za q komponente ekvivalent Q, kako bi suma sila u solveru bila ok 
-
-
-
 
 
 """
