@@ -19,7 +19,9 @@ class CalculateBeam:
         self.matrix_sum = []
         self.f_values, self.f_locations = self.forces_equation()
         self.momentum_equation()
-        self.calculate_matrix()
+        self.result_f = self.calculate_matrix()
+
+
 
 
     def forces_equation(self):
@@ -54,7 +56,6 @@ class CalculateBeam:
         locations = [value["location"] for key, value in beam_geometry.items() if key != "length"
                      and value["y"] is True ]
 
-
         # ide po potrebnom broju momentnih jednadžbi i postavlja momentne jednadžbe
         for x_pos in range(self.num_of_M_eq):
             m_eq = [i - x_pos for i in locations]       # momentna jednadža u koeficijentima
@@ -66,7 +67,11 @@ class CalculateBeam:
     def calculate_matrix(self):
         X, residuals, rank, s = np.linalg.lstsq(self.matrix_eq, self.matrix_sum, rcond=None)
 
+        return X
 
+
+    def all_forces(self):
+        f =3
 
 
 if __name__ == "__main__":
@@ -74,10 +79,4 @@ if __name__ == "__main__":
     CalculateBeam(sorted_loads=processed_data)
 
 
-
-
-        # ovo treba sreditida ne dodaje jednadžbe  za momente
-"""        self.num_of_M_eq < len(locations)
-        locations = [key for key, value in beam_geometry.items() if key != "length" ]
-        locations = list(tuple(locations))
-"""
+    print(processed_data)

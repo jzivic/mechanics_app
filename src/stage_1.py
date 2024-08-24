@@ -32,6 +32,8 @@ class HelpF:
         return f, w_c
 
 
+
+
 class LinearEquation:
     def __init__(self, A, B, x):
         self.A = A
@@ -114,11 +116,6 @@ class Prepare_Loads:
                                    key=lambda x: x[1]["position"][0] if x[1]["type"] == "q" else x[1]["position"]))
 
         return sorted_loads
-
-
-
-
-
 
 
 
