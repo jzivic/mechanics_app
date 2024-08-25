@@ -1,7 +1,7 @@
 # manim crtanje.py Crtanje_Momenta -pql
 
-from manim import *
-from elementi import *
+# from manim import *
+# from elementi import *
 
 from ulaz import *
 

@@ -84,7 +84,6 @@ class Prepare_Loads:
         q_loads = {key: value for key, value in sorted_forces_loads.items() if value.get("type") == "q"}
 
         for key in q_loads:
-
             # dodaje se ekvivalentna sila koja može zamijeniti q, F_eqv, kao i njeno težište
             sorted_forces_loads[key]["F_eqv"], sorted_forces_loads[key]["x_F_eqv"] \
                 = HelpF.transfor_q_to_F(sorted_forces_loads[key])

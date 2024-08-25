@@ -1,4 +1,8 @@
 import math
+from select import select
+
+from sympy.logic.inference import valid
+
 from stage_0 import *
 from stage_1 import *
 import numpy as np
@@ -20,8 +24,7 @@ class CalculateBeam:
         self.f_values, self.f_locations = self.forces_equation()
         self.momentum_equation()
         self.result_f = self.calculate_matrix()
-
-
+        self.all_sorted_loads = self.all_sorted_loads_f()
 
 
     def forces_equation(self):
@@ -70,8 +73,29 @@ class CalculateBeam:
         return X
 
 
-    def all_forces(self):
-        f =3
+    # vraća sve sile: q, F, R
+    def all_sorted_loads_f(self):
+
+        all_sorted_loads = self.sorted_loads.copy()
+        for n in range(len(self.f_locations)):
+            key = f'R{n + 1}'
+            force = float(round(self.result_f[n][0], 3))
+            location = self.f_locations[n]
+            all_sorted_loads[key] = {"type": "F", "value": force, "position": location, "angle": 0}
+
+        all_sorted_loads = dict(sorted(all_sorted_loads.items(), key=lambda x:
+            x[1]["position"][0] if x[1]["type"] == "q" else x[1]["position"]))
+
+        return all_sorted_loads
+
+
+
+
+
+
+
+
+
 
 
 if __name__ == "__main__":
@@ -79,4 +103,6 @@ if __name__ == "__main__":
     CalculateBeam(sorted_loads=processed_data)
 
 
-    print(processed_data)
+
+
+
