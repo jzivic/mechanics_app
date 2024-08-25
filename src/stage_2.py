@@ -1,4 +1,8 @@
 import math
+from select import select
+
+from sympy.logic.inference import valid
+
 from stage_0 import *
 from stage_1 import *
 import numpy as np
@@ -17,12 +21,10 @@ class CalculateBeam:
 
         self.matrix_eq = []
         self.matrix_sum = []
-        self.f_values_with_q, self.f_locations_with_q = self.forces_equation()
+        self.f_values, self.f_locations = self.forces_equation()
         self.momentum_equation()
         self.result_f = self.calculate_matrix()
-
-
-        self.all_forces()
+        self.all_sorted_loads = self.all_sorted_loads_f()
 
 
 
@@ -32,25 +34,24 @@ class CalculateBeam:
                 beam_geometry[support]["y"] is True]
         self.matrix_eq.append(f_eq)
 
-        # suma poprečnih sila (F i preračunatih q)
+        # sumna poprečnih sila (F i preračunatih q)
         sum_q = 0
-        f_values_with_q, f_locations_with_q = [], []
-
+        f_values, f_locations = [], []
         for key in self.sorted_loads:
 
             if self.sorted_loads[key]["type"] == "F":
-                f_values_with_q.append(-self.sorted_loads[key]["value"])
-                f_locations_with_q.append(self.sorted_loads[key]["position"])
+                f_values.append(-self.sorted_loads[key]["value"])
+                f_locations.append(self.sorted_loads[key]["position"])
                 sum_q -= self.sorted_loads[key]["value"]
 
             elif self.sorted_loads[key]["type"] == "q":
-                f_values_with_q.append(-self.sorted_loads[key]["F_eqv"])
-                f_locations_with_q.append(self.sorted_loads[key]["x_F_eqv"])
+                f_values.append(-self.sorted_loads[key]["F_eqv"])
+                f_locations.append(self.sorted_loads[key]["x_F_eqv"])
                 sum_q -= self.sorted_loads[key]["F_eqv"]
 
         self.matrix_sum.append([sum_q])
 
-        return f_values_with_q, f_locations_with_q
+        return f_values, f_locations
 
 
     def momentum_equation(self):
@@ -64,29 +65,40 @@ class CalculateBeam:
             m_eq = [i - x_pos for i in locations]       # momentna jednadža u koeficijentima
             self.matrix_eq.append(m_eq)
 
-            m_sum = [sum((i-x_pos)*j for i,j in zip( self.f_locations_with_q, self.f_values_with_q))]
+            m_sum = [sum((i-x_pos)*j for i,j in zip( self.f_locations, self.f_values))]
             self.matrix_sum.append(m_sum)
 
     def calculate_matrix(self):
         X, residuals, rank, s = np.linalg.lstsq(self.matrix_eq, self.matrix_sum, rcond=None)
 
-
         return X
 
 
-    def all_forces(self):
+    # vraća sve sile: q, F, R
+    def all_sorted_loads_f(self):
 
-        # for i,j in zip(self.f_values_with_q, self.f_locations_with_q):
-        #     print(i,j)
+        all_sorted_l = self.sorted_loads.copy()
+        for n in range(len(self.f_locations) - 1):
+            key = f'R{n + 1}'
+            force = float(round(self.result_f[n][0], 3))
+            location = self.f_locations[n]
+            all_sorted_l[key] = {"type": "F", "value": force, "position": location, "angle": 0}
 
-        3
+        all_sorted_loads = dict(sorted(all_sorted_l.items(), key=lambda x:
+            x[1]["position"][0] if x[1]["type"] == "q" else x[1]["position"]))
 
-        # for key, value in self.sorted_loads.items():
-        #     print(key, value)
+        return all_sorted_loads
+
+
+
+
+
+
 
 
 
 
 if __name__ == "__main__":
     processed_data = Prepare_Loads(loads_1).sorted_loads
-    CalculateBeam(sorted_loads=processed_data)
+    all_sorted_loads = CalculateBeam(sorted_loads=processed_data).all_sorted_loads
+

@@ -32,11 +32,8 @@ class Zadnja:
 
 
 
-
-
 if __name__ == "__main__":
     processed_data = Prepare_Loads(loads_1).sorted_loads
     CalculateBeam(sorted_loads=processed_data)
-
 
 

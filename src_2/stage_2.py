@@ -86,6 +86,12 @@ class CalculateBeam:
         all_sorted_loads = dict(sorted(all_sorted_loads.items(), key=lambda x:
             x[1]["position"][0] if x[1]["type"] == "q" else x[1]["position"]))
 
+
+        for key, value in all_sorted_loads.items():
+            print(key, value)
+
+
+
         return all_sorted_loads
 
 
