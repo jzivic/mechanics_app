@@ -41,17 +41,13 @@ class LinearEquation:
         self.x = x
         self.result = self.compute_value()
 
-        return ("Ovo je represija")
-
     @staticmethod
     def slope_exception_handler(func):
         def wrapper(self):
             if self.A[0] == self.B[0]:
                 return float('inf')
-
             elif self.A[1] == self.B[1]:
                 return 0
-
             else:
                 return func(self)
         return wrapper
@@ -82,6 +78,8 @@ class Prepare_Loads:
 
         f_loads = {key: value for key, value in sorted_forces_loads.items() if value.get("type") == "F"}
         q_loads = {key: value for key, value in sorted_forces_loads.items() if value.get("type") == "q"}
+
+
 
         for key in q_loads:
 
@@ -127,5 +125,3 @@ class Prepare_Loads:
 
 if __name__ == "__main__":
     Prepare_Loads(load_dict=loads_1)
-
-

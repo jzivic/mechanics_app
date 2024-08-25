@@ -21,7 +21,6 @@ class CalculateBeam:
         self.momentum_equation()
         self.result_f = self.calculate_matrix()
 
-        self.all_forces()
 
 
 
@@ -34,7 +33,6 @@ class CalculateBeam:
         # sumna poprečnih sila (F i preračunatih q)
         sum_q = 0
         f_values, f_locations = [], []
-
         for key in self.sorted_loads:
 
             if self.sorted_loads[key]["type"] == "F":
@@ -73,13 +71,12 @@ class CalculateBeam:
 
 
     def all_forces(self):
-
-
-
-        print(self.f_values, self.f_locations)
-
+        f =3
 
 
 if __name__ == "__main__":
     processed_data = Prepare_Loads(loads_1).sorted_loads
     CalculateBeam(sorted_loads=processed_data)
+
+
+    print(processed_data)

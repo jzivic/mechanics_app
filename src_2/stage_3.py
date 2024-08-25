@@ -7,31 +7,6 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 
-class Zadnja:
-
-    def __init__(self):
-        print(processed_data)
-
-
-    # for key, value in processed_data.items():
-    #     print(key)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 if __name__ == "__main__":
@@ -39,4 +14,4 @@ if __name__ == "__main__":
     CalculateBeam(sorted_loads=processed_data)
 
 
-
+    print(processed_data)
