@@ -69,10 +69,35 @@ class LinearEquation:
 
 
 
+
+
+
+
 class Prepare_Loads:
-    def __init__(self, load_dict):
+    def __init__(self, load_dict, beam_geometry):
         self.load_dict = load_dict
+
+        self.support_dict = {key: value for key, value in beam_geometry.items() if key != "length"}
+
+
+        print(self.support_dict)
+
+
+        self.check_indeterminate(self.support_dict)
+
+
+
         self.sorted_loads = self.sort_decompose_loads()
+
+
+
+
+    def check_indeterminate(self, support_dict):
+        for i in support_dict:
+            print(i)
+
+
+
 
     def sort_decompose_loads(self):
 
@@ -94,7 +119,7 @@ class Prepare_Loads:
             # if there is a F within q range, x_in_q will store the location
             x_in_q = [x_start]
 
-            # ako posotji neka sila F unutar kontinuiranog opterećenja dodaje se u x_in_q varijablu
+            # ako postoji neka sila F unutar kontinuiranog opterećenja dodaje se u x_in_q varijablu
             x_in_q += [sorted_forces_loads[x]["position"] for x in f_loads if x_start < f_loads[x]["position"] < x_end]
             x_in_q.append(x_end)
 
@@ -125,6 +150,6 @@ class Prepare_Loads:
 
 
 if __name__ == "__main__":
-    Prepare_Loads(load_dict=loads_1)
+    Prepare_Loads(load_dict=loads_1, beam_geometry=beam_geometry_1)
 
 

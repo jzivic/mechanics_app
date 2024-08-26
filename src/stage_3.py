@@ -7,18 +7,17 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 
-class Zadnja:
+class Diagrams_forces:
 
-    def __init__(self):
-        print(processed_data)
-
-
-    # for key, value in processed_data.items():
-    #     print(key)
+    def __init__(self, all_sorted_loads):
 
 
+        for key, value in all_sorted_loads.items():
 
+            v = value["value"]
+            p = value["position"]
 
+            print(p, v, key)
 
 
 
@@ -34,6 +33,8 @@ class Zadnja:
 
 if __name__ == "__main__":
     processed_data = Prepare_Loads(loads_1).sorted_loads
-    CalculateBeam(sorted_loads=processed_data)
+    all_sorted_loads = CalculateBeam(sorted_loads=processed_data).all_sorted_loads
 
+
+    Diagrams_forces(all_sorted_loads)
 

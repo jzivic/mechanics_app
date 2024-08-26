@@ -17,7 +17,7 @@ class CalculateBeam:
 
         # broj momentnih jednadžbi ovisi o broju oslonaca u y smjeru
         self.num_of_M_eq = len([1 for support in beam_geometry if support != "length"
-                                and beam_geometry[support]["y"] is True]) - 1
+                                and beam_geometry[support]["z"] is True]) - 1
 
         self.matrix_eq = []
         self.matrix_sum = []
@@ -31,8 +31,9 @@ class CalculateBeam:
     def forces_equation(self):
 
         f_eq = [1 for support in beam_geometry if support != "length" and
-                beam_geometry[support]["y"] is True]
+                beam_geometry[support]["z"] is True]
         self.matrix_eq.append(f_eq)
+
 
         # sumna poprečnih sila (F i preračunatih q)
         sum_q = 0
@@ -58,7 +59,7 @@ class CalculateBeam:
 
         # lokacije točaka gdje će se postaviti momentne jednadžbe ( u osloncima )
         locations = [value["location"] for key, value in beam_geometry.items() if key != "length"
-                     and value["y"] is True ]
+                     and value["z"] is True ]
 
         # ide po potrebnom broju momentnih jednadžbi i postavlja momentne jednadžbe
         for x_pos in range(self.num_of_M_eq):
@@ -68,8 +69,12 @@ class CalculateBeam:
             m_sum = [sum((i-x_pos)*j for i,j in zip( self.f_locations, self.f_values))]
             self.matrix_sum.append(m_sum)
 
+
+
+
     def calculate_matrix(self):
         X, residuals, rank, s = np.linalg.lstsq(self.matrix_eq, self.matrix_sum, rcond=None)
+
 
         return X
 
@@ -102,3 +107,4 @@ if __name__ == "__main__":
     processed_data = Prepare_Loads(loads_1).sorted_loads
     all_sorted_loads = CalculateBeam(sorted_loads=processed_data).all_sorted_loads
 
+    print(all_sorted_loads)
