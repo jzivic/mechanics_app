@@ -79,11 +79,7 @@ class Prepare_Loads:
 
         self.support_dict = {key: value for key, value in beam_geometry.items() if key != "length"}
 
-
-        print(self.support_dict)
-
-
-        self.check_indeterminate(self.support_dict)
+        self.check_indeterminate()
 
 
 
@@ -92,11 +88,14 @@ class Prepare_Loads:
 
 
 
-    def check_indeterminate(self, support_dict):
-        for i in support_dict:
-            print(i)
+    def check_indeterminate(self):
+        n_supports = sum([value is True for sub_dict in self.support_dict.values() for value in sub_dict.values()])
+        n_forces = len(self.load_dict)
 
-
+        if n_supports > n_forces:
+            raise ValueError("System is statistically undeterminated")
+        else:
+            print("System is ok")
 
 
     def sort_decompose_loads(self):
