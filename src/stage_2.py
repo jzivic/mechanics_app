@@ -12,12 +12,18 @@ import numpy as np
 
 
 class CalculateBeam:
-    def __init__(self, sorted_loads):
+    def __init__(self, sorted_loads, beam_geometry):
         self.sorted_loads = sorted_loads
+        self.beam_geometry = beam_geometry
 
         # broj momentnih jednadžbi ovisi o broju oslonaca u y smjeru
-        self.num_of_M_eq = len([1 for support in beam_geometry if support != "length"
-                                and beam_geometry[support]["z"] is True]) - 1
+        self.num_of_M_eq = len([1 for support in self.beam_geometry if support != "length"
+                                and self.beam_geometry[support]["z"] is True]) - 1
+
+
+
+
+
 
         self.matrix_eq = []
         self.matrix_sum = []
@@ -30,9 +36,10 @@ class CalculateBeam:
 
     def forces_equation(self):
 
-        f_eq = [1 for support in beam_geometry if support != "length" and
-                beam_geometry[support]["z"] is True]
-        self.matrix_eq.append(f_eq)
+        # f_eq = [1 for support in self.beam_geometry if support != "length" and
+        #         self.beam_geometry[support]["z"] is True]
+        # self.matrix_eq.append(f_eq)
+
 
 
         # sumna poprečnih sila (F i preračunatih q)
@@ -58,7 +65,7 @@ class CalculateBeam:
     def momentum_equation(self):
 
         # lokacije točaka gdje će se postaviti momentne jednadžbe ( u osloncima )
-        locations = [value["location"] for key, value in beam_geometry.items() if key != "length"
+        locations = [value["location"] for key, value in self.beam_geometry.items() if key != "length"
                      and value["z"] is True ]
 
         # ide po potrebnom broju momentnih jednadžbi i postavlja momentne jednadžbe
@@ -74,7 +81,6 @@ class CalculateBeam:
 
     def calculate_matrix(self):
         X, residuals, rank, s = np.linalg.lstsq(self.matrix_eq, self.matrix_sum, rcond=None)
-
 
         return X
 
@@ -104,7 +110,15 @@ class CalculateBeam:
 
 
 if __name__ == "__main__":
-    processed_data = Prepare_Loads(loads_1).sorted_loads
-    all_sorted_loads = CalculateBeam(sorted_loads=processed_data).all_sorted_loads
 
-    print(all_sorted_loads)
+    A = Prepare_Loads(load_dict=loads_1, beam_geometry=beam_geometry_1)
+    processed_data = A.sorted_loads
+
+    print(processed_data)
+
+    all_sorted_loads = CalculateBeam(sorted_loads=processed_data, beam_geometry=beam_geometry_1).all_sorted_loads
+
+
+
+    for k, v in all_sorted_loads.items():
+        print(k,v)

@@ -76,19 +76,52 @@ class LinearEquation:
 class Prepare_Loads:
     def __init__(self, load_dict, beam_geometry):
         self.load_dict = load_dict
+        self.beam_geometry = beam_geometry
+
         self.support_dict = {key: value for key, value in beam_geometry.items() if key != "length"}
+
+
+        self.support_dict = {
+            support: {key: value for key, value in self.support_dict[support].items() }
+            for support in self.support_dict if self.support_dict[support]['z'] }
+
+
+        """
+        TREBA SMISLITI,  SREDITI, ORGANIZIRATI  SUPPORT DICT TE ONDA MOMENT RJEŠAVAČ DODATI  
+        """
+
+
+        print(self.support_dict)
+
+
+
         self.check_indeterminate()
-        self.sorted_loads = self.sort_decompose_loads()
+        self.f_eq = [1 for support in self.support_dict if self.support_dict[support]["z"] is True]
+
+
+
+
+        self.num_of_M_eq = len([1 for support in self.support_dict if self.beam_geometry[support]["z"] is True])
+
+
+
+
+
+
+
+        # self.sorted_loads = self.sort_decompose_loads()
 
 
     def check_indeterminate(self):
         n_supports = sum([value is True for sub_dict in self.support_dict.values() for value in sub_dict.values()])
+
         n_forces = len(self.load_dict)
 
         if n_supports > n_forces:
-            raise ValueError("System is statistically undeterminated")
+            raise ValueError("System is statistically undetermined")
         else:
-            print("System is ok")
+            pass
+            # print("System is ok")
 
 
     def sort_decompose_loads(self):
@@ -142,6 +175,4 @@ class Prepare_Loads:
 
 
 if __name__ == "__main__":
-    Prepare_Loads(load_dict=loads_1, beam_geometry=beam_geometry_1)
-
-
+    A = Prepare_Loads(load_dict=loads_1, beam_geometry=beam_geometry_1)
