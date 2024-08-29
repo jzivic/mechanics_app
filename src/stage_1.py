@@ -76,16 +76,9 @@ class LinearEquation:
 class Prepare_Loads:
     def __init__(self, load_dict, beam_geometry):
         self.load_dict = load_dict
-
         self.support_dict = {key: value for key, value in beam_geometry.items() if key != "length"}
-
         self.check_indeterminate()
-
-
-
         self.sorted_loads = self.sort_decompose_loads()
-
-
 
 
     def check_indeterminate(self):
