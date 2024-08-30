@@ -7,6 +7,8 @@ Stage 1 je dio koji će učitavati sile u neki riječnik gdje će biti svi podac
 """
 
 import math
+from venv import logger
+
 from stage_0 import *
 
 
@@ -79,50 +81,24 @@ class Prepare_Loads:
         self.beam_geometry = beam_geometry
 
         self.support_dict = {key: value for key, value in beam_geometry.items() if key != "length"}
-
-
-        self.support_dict = {
-            support: {key: value for key, value in self.support_dict[support].items() }
-            for support in self.support_dict if self.support_dict[support]['z'] }
-
-
-        """
-        TREBA SMISLITI,  SREDITI, ORGANIZIRATI  SUPPORT DICT TE ONDA MOMENT RJEŠAVAČ DODATI  
-        """
-
-
-        print(self.support_dict)
-
-
-
         self.check_indeterminate()
-        self.f_eq = [1 for support in self.support_dict if self.support_dict[support]["z"] is True]
 
+        self.f_eq = [1 for support in self.support_dict if self.support_dict[support]["y"] is True]
+        self.num_of_M_eq = len([1 for support in self.support_dict if self.beam_geometry[support]["y"] is True])
 
-
-
-        self.num_of_M_eq = len([1 for support in self.support_dict if self.beam_geometry[support]["z"] is True])
-
-
-
-
-
-
-
-        # self.sorted_loads = self.sort_decompose_loads()
+        self.sorted_loads = self.sort_decompose_loads()
 
 
     def check_indeterminate(self):
         n_supports = sum([value is True for sub_dict in self.support_dict.values() for value in sub_dict.values()])
-
         n_forces = len(self.load_dict)
 
         if n_supports > n_forces:
             raise ValueError("System is statistically undetermined")
+
         else:
             pass
             # print("System is ok")
-
 
     def sort_decompose_loads(self):
 
