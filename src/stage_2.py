@@ -28,15 +28,6 @@ class CalculateBeam(Prepare_Loads):
 
 
 
-            """"
-            
-            - u jednadžbu sila teba dodati var momenta i postaviti ga na nulu
-            - momentne jednadže treba postaviti po potrebnim točkama 
-            
-            - sve to ubaciti u jednadžbu za sumu sila i momenata) 
-            
-            
-            """
 
 
 
@@ -81,7 +72,6 @@ class CalculateBeam(Prepare_Loads):
 
         m_locations = [value["location"] for key, value in self.support_dict.items() if value["z"] is True ]
 
-        # sum(M) za x=0
 
         for i in self.support_dict:
             print(i)
@@ -92,9 +82,16 @@ class CalculateBeam(Prepare_Loads):
         for x_pos in range(self.num_of_M_eq):
             m_eq = [i - x_pos for i in m_locations]       # momentna jednadža u koeficijentima
 
+
+
             self.matrix_eq.append(m_eq)
 
             m_sum = [sum((i-x_pos)*j for i,j in zip( self.f_locations, self.f_values))]
+
+
+
+
+
             self.matrix_sum.append(m_sum)
 
 
@@ -142,3 +139,14 @@ if __name__ == "__main__":
 
 
 
+
+
+""""
+
+- u jednadžbu sila teba dodati var momenta i postaviti ga na nulu
+- momentne jednadže treba postaviti po potrebnim točkama 
+
+- sve to ubaciti u jednadžbu za sumu sila i momenata) 
+
+
+"""

@@ -81,6 +81,12 @@ class Prepare_Loads:
         self.beam_geometry = beam_geometry
 
         self.support_dict = {key: value for key, value in beam_geometry.items() if key != "length"}
+
+
+
+
+
+
         self.check_indeterminate()
 
         self.f_eq = [1 for support in self.support_dict if self.support_dict[support]["z"] is True]
