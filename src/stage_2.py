@@ -4,6 +4,7 @@ from select import select
 from fontTools.subset import neuter_lookups
 from sympy.logic.inference import valid
 
+import src.proba
 from stage_0 import *
 from stage_1 import *
 import numpy as np
@@ -16,12 +17,16 @@ class CalculateBeam(Prepare_Loads):
     def __init__(self, load_dict, beam_geometry):
         super().__init__(load_dict, beam_geometry)
 
+        self.variables = self.naming_variables()
+
 
         self.matrix_eq, self.matrix_sum = [self.f_eq], []
         self.f_values, self.f_locations = self.forces_equation()
 
 
         self.momentum_equation()
+
+
         # self.result_f = self.calculate_matrix()
         # self.all_sorted_loads = self.all_sorted_loads_f()
 
@@ -29,17 +34,18 @@ class CalculateBeam(Prepare_Loads):
 
 
 
+    # daje imena silama i momentima u osloncima
+    def naming_variables(self):
+        variables = {}
+        for n in range(len(self.support_dict["z"])):
+            variables[f'R{n + 1}'] = {"type": "R", "location": self.support_dict["z"][n], "value": None}
+        for n in range(len(self.support_dict["M"])):
+            variables[f'M{n + 1}'] = {"type": "M", "location": self.support_dict["M"][n], "value": None}
 
-
-
-
-
-
-
+        return variables
 
 
     def forces_equation(self):
-
         # sumna poprečnih sila (F i preračunatih q)
         sum_f = 0
         f_values, f_locations = [], []
@@ -56,9 +62,8 @@ class CalculateBeam(Prepare_Loads):
                 f_locations.append(self.sorted_loads[key]["x_F_eqv"])
                 sum_f -= self.sorted_loads[key]["F_eqv"]
 
+        # ovo je za sumu sila
         self.matrix_sum.append([sum_f])
-
-
 
         return f_values, f_locations
 
@@ -67,32 +72,23 @@ class CalculateBeam(Prepare_Loads):
 
     def momentum_equation(self):
 
-        # lokacije točaka gdje će se postaviti momentne jednadžbe ( u osloncima ),
-        # te se u njima trebaju postaviti momentne jendadžbe
-
-        m_locations = [value["location"] for key, value in self.support_dict.items() if value["z"] is True ]
+        # točke u kojima se postavljaju momentne jednadžbe
+        m_locations = [i for i in range(self.num_of_M_eq)]
 
 
-        for i in self.support_dict:
-            print(i)
+        for n in range(self.num_of_M_eq):
+            # print(n)
+            3
 
 
 
         # ide po potrebnom broju momentnih jednadžbi i postavlja momentne jednadžbe
-        for x_pos in range(self.num_of_M_eq):
-            m_eq = [i - x_pos for i in m_locations]       # momentna jednadža u koeficijentima
-
-
-
-            self.matrix_eq.append(m_eq)
-
-            m_sum = [sum((i-x_pos)*j for i,j in zip( self.f_locations, self.f_values))]
-
-
-
-
-
-            self.matrix_sum.append(m_sum)
+        # for x_pos in range(self.num_of_M_eq):
+            # print(x_pos)
+            # m_eq = [i - x_pos for i in m_locations]       # momentna jednadža u koeficijentima
+            # self.matrix_eq.append(m_eq)
+            # m_sum = [sum((i-x_pos)*j for i,j in zip( self.f_locations, self.f_values))]
+            # self.matrix_sum.append(m_sum)
 
 
 
@@ -139,14 +135,3 @@ if __name__ == "__main__":
 
 
 
-
-
-""""
-
-- u jednadžbu sila teba dodati var momenta i postaviti ga na nulu
-- momentne jednadže treba postaviti po potrebnim točkama 
-
-- sve to ubaciti u jednadžbu za sumu sila i momenata) 
-
-
-"""

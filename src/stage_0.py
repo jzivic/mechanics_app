@@ -16,9 +16,8 @@ pozitivan moment je u desno, koji zatvara šaku
 #
 # beam_geometry_1 = {
 #         "length": [0,10],
-#         "S1": {"z": True, "M": False,  "location": 2},
-#         "S2": {"z": True, "M": False, "location": 10},
-#         "S3": {"z": False, "M": True, "location": 8}       # odmah ima x,y oslonce po difoltu jer je uklještenje
+#         "S1": {"z": True, "M": False, "location": 0},
+#         "S2": {"z": False, "M": True, "location": 10}       # odmah ima x,y oslonce po difoltu jer je uklještenje
 # }
 
 
@@ -28,10 +27,12 @@ loads_1 = {
         "L3": {"type": "M", "value": -10, "angle": 0, "position": 0}
 }
 
+
+
 beam_geometry_1 = {
-        "length": [0,10],
-        "S1": {"z": True, "M": False, "location": 0},
-        "S2": {"z": False, "M": True, "location": 10}       # odmah ima x,y oslonce po difoltu jer je uklještenje
+        "length": [0, 10],
+        "z": [0, 10],
+        "M": [10]
 }
 
 
