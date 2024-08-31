@@ -57,7 +57,6 @@ for key, value in beam_geometry_1.items():
 
 
 
-print(a)
 
 
 
