@@ -1,6 +1,7 @@
 import math
 from select import select
 
+from fontTools.subset import neuter_lookups
 from sympy.logic.inference import valid
 
 from stage_0 import *
@@ -11,74 +12,95 @@ import numpy as np
 
 
 
-class CalculateBeam:
-    def __init__(self, sorted_loads, beam_geometry):
-        self.sorted_loads = sorted_loads
-        self.beam_geometry = beam_geometry
+class CalculateBeam(Prepare_Loads):
+    def __init__(self, load_dict, beam_geometry):
+        super().__init__(load_dict, beam_geometry)
 
 
-        self.matrix_eq = []
-        self.matrix_sum = []
-
-
+        self.matrix_eq, self.matrix_sum = [self.f_eq], []
         self.f_values, self.f_locations = self.forces_equation()
 
 
-
-
-        # self.momentum_equation()
+        self.momentum_equation()
         # self.result_f = self.calculate_matrix()
         # self.all_sorted_loads = self.all_sorted_loads_f()
 
 
 
+
+            """"
+            
+            - u jednadžbu sila teba dodati var momenta i postaviti ga na nulu
+            - momentne jednadže treba postaviti po potrebnim točkama 
+            
+            - sve to ubaciti u jednadžbu za sumu sila i momenata) 
+            
+            
+            """
+
+
+
+
+
+
+
+
+
+
     def forces_equation(self):
 
-        f_eq = [1 for support in self.beam_geometry if support != "length" and
-                self.beam_geometry[support]["z"] is True]
-
-
-        f_eq = [1 for support in ]
-
-
-        # self.matrix_eq.append(f_eq)
-
-        return 1, 2
-
-
         # sumna poprečnih sila (F i preračunatih q)
-        sum_q = 0
+        sum_f = 0
         f_values, f_locations = [], []
+
         for key in self.sorted_loads:
 
             if self.sorted_loads[key]["type"] == "F":
                 f_values.append(-self.sorted_loads[key]["value"])
                 f_locations.append(self.sorted_loads[key]["position"])
-                sum_q -= self.sorted_loads[key]["value"]
+                sum_f -= self.sorted_loads[key]["value"]
 
             elif self.sorted_loads[key]["type"] == "q":
                 f_values.append(-self.sorted_loads[key]["F_eqv"])
                 f_locations.append(self.sorted_loads[key]["x_F_eqv"])
-                sum_q -= self.sorted_loads[key]["F_eqv"]
+                sum_f -= self.sorted_loads[key]["F_eqv"]
 
-        self.matrix_sum.append([sum_q])
+        self.matrix_sum.append([sum_f])
+
+
 
         return f_values, f_locations
 
 
+
+
     def momentum_equation(self):
 
-        # lokacije točaka gdje će se postaviti momentne jednadžbe ( u osloncima )
-        locations = [value["location"] for key, value in self.beam_geometry.items() if key != "length"
-                     and value["z"] is True ]
+        # lokacije točaka gdje će se postaviti momentne jednadžbe ( u osloncima ),
+        # te se u njima trebaju postaviti momentne jendadžbe
+
+        m_locations = [value["location"] for key, value in self.support_dict.items() if value["z"] is True ]
+
+        # sum(M) za x=0
+
+        for i in self.support_dict:
+            print(i)
+
+
 
         # ide po potrebnom broju momentnih jednadžbi i postavlja momentne jednadžbe
         for x_pos in range(self.num_of_M_eq):
-            m_eq = [i - x_pos for i in locations]       # momentna jednadža u koeficijentima
+            m_eq = [i - x_pos for i in m_locations]       # momentna jednadža u koeficijentima
+
             self.matrix_eq.append(m_eq)
 
             m_sum = [sum((i-x_pos)*j for i,j in zip( self.f_locations, self.f_values))]
             self.matrix_sum.append(m_sum)
+
+
+
+
+
 
 
 
@@ -115,13 +137,8 @@ class CalculateBeam:
 
 if __name__ == "__main__":
 
-    A = Prepare_Loads(load_dict=loads_1, beam_geometry=beam_geometry_1)
-    processed_data = A.sorted_loads
 
+    CalculateBeam(load_dict=loads_1, beam_geometry=beam_geometry_1)
 
-    
-
-
-    all_sorted_loads = CalculateBeam(sorted_loads=processed_data, beam_geometry=beam_geometry_1).all_sorted_loads
 
 

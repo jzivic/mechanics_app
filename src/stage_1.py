@@ -83,8 +83,8 @@ class Prepare_Loads:
         self.support_dict = {key: value for key, value in beam_geometry.items() if key != "length"}
         self.check_indeterminate()
 
-        self.f_eq = [1 for support in self.support_dict if self.support_dict[support]["y"] is True]
-        self.num_of_M_eq = len([1 for support in self.support_dict if self.beam_geometry[support]["y"] is True])
+        self.f_eq = [1 for support in self.support_dict if self.support_dict[support]["z"] is True]
+        self.num_of_M_eq = len([1 for support in self.support_dict if self.beam_geometry[support]["z"] is True])
 
         self.sorted_loads = self.sort_decompose_loads()
 
