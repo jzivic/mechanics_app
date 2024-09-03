@@ -1,12 +1,4 @@
-import math
-from select import select
 
-from fontTools.subset import neuter_lookups
-from fontTools.ttx import opentypeheaderRE
-from sympy import pprint
-from sympy.logic.inference import valid
-
-import src.proba
 from stage_0 import *
 from stage_1 import *
 import numpy as np
@@ -20,16 +12,16 @@ class CalculateBeam(Prepare_Loads):
         super().__init__(load_dict, beam_geometry)
 
         self.variables = self.naming_variables()
-
-
         self.matrix_eq, self.matrix_sum = [self.f_eq], []
         self.f_values, self.f_locations = self.forces_equation()
-
 
         self.momentum_equation()
 
 
         # self.result_f = self.calculate_matrix()
+
+
+
         # self.all_sorted_loads = self.all_sorted_loads_f()
 
 
@@ -65,7 +57,7 @@ class CalculateBeam(Prepare_Loads):
                 sum_f -= self.sorted_loads[key]["F_eqv"]
 
         # ovo je za sumu sila
-        self.matrix_sum.append([sum_f])
+        # self.matrix_sum.append([sum_f])
 
         return f_values, f_locations
 
@@ -74,53 +66,27 @@ class CalculateBeam(Prepare_Loads):
     # OVO TREBA SREDITI MAJKU MU JEBEM
     def momentum_equation(self):
 
+        # suma eksternih momenata
+        ext_M_sum = sum(v["value"] for v in self.load_dict.values() if v["type"] == "M")
+
         # točke u kojima se postavljaju momentne jednadžbe
         m_locations = [i for i in range(self.num_of_M_eq)]
 
         # ovo ide za postavljanje jednadžbi za sile
-        var = [var for var in self.variables]
-
-
-        print(self.support_dict)
+        var = [var for var in self.variables.keys()]
 
         for x_pos in m_locations:
-            M_eq = [i - x_pos for i in self.support_dict]
-            # M_sum = [sum((i - x_pos) * j for i, j in zip(self.f_locations, self.f_values))]
+            M_eq = [i - x_pos for i in self.support_dict["z"]]
+            M_sum = [sum((i - x_pos) * j for i, j in zip(self.f_locations, self.f_values)) + ext_M_sum]
 
-            print(self.f_locations)
-
-            # print(M_sum)
-
+            self.matrix_eq.append(M_eq)
+            self.matrix_sum.append(M_sum)
 
 
 
 
-        # def momentum_equation(self):
-        #     F_locations = list(Data["F"].keys())
-        #     F_values = list(Data["F"].values())
-        #     for n_equation in range(self.num_of_M_eq):
-        #         x_pos = n_equation
-        #         M_eq = [i - x_pos for i in Data["S"]]
-        #         M_sum = [sum((i - x_pos) * j for i, j in zip(F_locations, F_values))]
-        #         self.Matrix_eq.append(M_eq)
-        #         self.Matrix_sum.append(M_sum)
-
-
-
-
-
-
-
-        # ide po potrebnom broju momentnih jednadžbi i postavlja momentne jednadžbe
-        # for x_pos in range(self.num_of_M_eq):
-        #     print(x_pos)
-        #     m_eq = [i - x_pos for i in m_locations]       # momentna jednadža u koeficijentima
-        #     self.matrix_eq.append(m_eq)
-        #     m_sum = [sum((i-x_pos)*j for i,j in zip( self.f_locations, self.f_values))]
-        #     self.matrix_sum.append(m_sum)
-
-
-
+            print(M_eq)
+            print(M_sum)
 
 
 

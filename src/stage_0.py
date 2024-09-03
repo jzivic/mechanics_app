@@ -32,7 +32,7 @@ loads_1 = {
 beam_geometry_1 = {
         "length": [0, 10],
         "z": [0, 10],
-        "M": [10]
+        # "M": []
 }
 
 
