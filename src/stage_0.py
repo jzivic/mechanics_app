@@ -23,7 +23,7 @@ pozitivan moment je u desno, koji zatvara šaku
 
 loads_1 = {
         "L1": {"type": "F", "value": -10, "angle": 0, "position": 0},
-        "L2": {"type": "F", "value": -10, "angle": 0, "position": 10},
+        "L2": {"type": "F", "value": -20, "angle": 0, "position": 10},
         "L3": {"type": "M", "value": -10, "angle": 0, "position": 0}
 }
 
@@ -31,8 +31,8 @@ loads_1 = {
 
 beam_geometry_1 = {
         "length": [0, 10],
-        "z": [0, 10],
-        # "M": []
+        "z": [0],
+        "M": [10]
 }
 
 

@@ -14,33 +14,27 @@ class CalculateBeam(Prepare_Loads):
         self.variables = self.naming_variables()
         self.matrix_eq, self.matrix_sum = [self.f_eq], []
         self.f_values, self.f_locations = self.forces_equation()
-
         self.momentum_equation()
-
 
         # self.result_f = self.calculate_matrix()
 
-
-
         # self.all_sorted_loads = self.all_sorted_loads_f()
-
-
 
 
 
     # daje imena silama i momentima u osloncima
     def naming_variables(self):
         variables = {}
-        for n in range(len(self.support_dict["z"])):
+        for n in range(len(self.support_dict.get("z", []))):
             variables[f'R{n + 1}'] = {"type": "R", "location": self.support_dict["z"][n], "value": None}
-        for n in range(len(self.support_dict["M"])):
+        for n in range(len(self.support_dict.get("M", []))):
             variables[f'M{n + 1}'] = {"type": "M", "location": self.support_dict["M"][n], "value": None}
 
         return variables
 
 
     def forces_equation(self):
-        # sumna poprečnih sila (F i preračunatih q)
+        # suma poprečnih sila (F i preračunatih q)
         sum_f = 0
         f_values, f_locations = [], []
 
@@ -57,13 +51,15 @@ class CalculateBeam(Prepare_Loads):
                 sum_f -= self.sorted_loads[key]["F_eqv"]
 
         # ovo je za sumu sila
-        # self.matrix_sum.append([sum_f])
+        self.matrix_sum.append([sum_f])
+
+        print(self.matrix_sum)
 
         return f_values, f_locations
 
 
 
-    # OVO TREBA SREDITI MAJKU MU JEBEM
+
     def momentum_equation(self):
 
         # suma eksternih momenata
@@ -72,28 +68,27 @@ class CalculateBeam(Prepare_Loads):
         # točke u kojima se postavljaju momentne jednadžbe
         m_locations = [i for i in range(self.num_of_M_eq)]
 
+
         # ovo ide za postavljanje jednadžbi za sile
         var = [var for var in self.variables.keys()]
 
         for x_pos in m_locations:
+
             M_eq = [i - x_pos for i in self.support_dict["z"]]
             M_sum = [sum((i - x_pos) * j for i, j in zip(self.f_locations, self.f_values)) + ext_M_sum]
+
+
+            print(M_eq, M_sum)
 
             self.matrix_eq.append(M_eq)
             self.matrix_sum.append(M_sum)
 
 
 
-
-            print(M_eq)
-            print(M_sum)
-
-
-
-
-
     def calculate_matrix(self):
-        X, residuals, rank, s = np.linalg.lstsq(self.matrix_eq, self.matrix_sum, rcond=None)
+        # X, residuals, rank, s = np.linalg.lstsq(self.matrix_eq, self.matrix_sum, rcond=None)
+
+        X = 3
 
         return X
 
