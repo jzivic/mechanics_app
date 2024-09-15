@@ -43,7 +43,9 @@ class CalculateBeam(Prepare_Loads):
 
     def equilibrium_equations(self):
 
-        sum_f = sum([v["value"] for v in self.sorted_loads.values() if v["type"] == "F"])
+        sum_f = -(sum([v["value"] for v in self.sorted_loads.values() if v["type"] == "F"]) +
+                 sum([v["F_eqv"] for v in self.sorted_loads.values() if v["type"] == "q"]))
+
         matrix_sum = [[sum_f]]
 
         # PRVO IDE JEDNADŽBA SILA
@@ -51,9 +53,8 @@ class CalculateBeam(Prepare_Loads):
         f_eq.extend([0 for v in self.variables.values() if v["type"] == "M"])
         matrix_eq = [f_eq]
 
-
         # MOMNENTNA JEDNADŽBA
-        sum_M_extern = sum(v["value"] for v in self.sorted_loads.values() if v["type"] == "M")
+        sum_M_extern = -sum(v["value"] for v in self.sorted_loads.values() if v["type"] == "M")
         m_locations = [var["location"] for var in self.variables.values() if var["type"] == "F"]
 
         for x_pos in m_locations:
@@ -67,7 +68,7 @@ class CalculateBeam(Prepare_Loads):
                     m_eq[n] = dist  # Moment arm
 
                 elif var_info["type"] == "q":  # Reaction force
-                    dist = var_info["location"] - x_pos
+                    dist = var_info["x_F_ewv"] - x_pos
                     m_eq[n] = dist  # Moment arm
 
 
@@ -76,9 +77,12 @@ class CalculateBeam(Prepare_Loads):
 
             matrix_eq.append(m_eq)
 
-            # ovdje treba ić suma u točki x_pos
-            for k, v in filter(lambda item: item[1]["type"] == "F", self.sorted_loads.items()):
-                sum_M_position += v["value"] * ( v["position"] - x_pos)
+            for key, value in self.sorted_loads.items():
+                if value["type"] == "F":
+                    sum_M_position -= value["value"] * (value["position"] - x_pos)
+
+                if value["type"] == "q":
+                    sum_M_position -= value["value"] * (value["x_F_eqv"] - x_pos)
 
             matrix_sum.append([sum_M_position])
 
@@ -89,6 +93,8 @@ class CalculateBeam(Prepare_Loads):
 
         # print(f"Matrix Eq: {self.matrix_eq}")
         # print(f"Matrix Sum: {self.matrix_sum}")
+
+
 
 
     def calculate_matrix(self):

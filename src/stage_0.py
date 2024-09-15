@@ -21,18 +21,18 @@ pozitivan moment je u desno, koji zatvara šaku
 # }
 
 
-# PO DIFOLTU SU U NEGATIVNOM SMJERU
+
 loads_1 = {
-        # "L1": {"type": "F", "value": -10, "angle": 0, "position": 0},
+        "L1": {"type": "F", "value": -10, "angle": 0, "position": 0},
         "L2": {"type": "q", "value": 10, "angle": 0, "position": [9,10]},
-        "L3": {"type": "M", "value": 10, "angle": 0, "position": 0}
+        # "L3": {"type": "M", "value": -10, "angle": 0, "position": 0}
 }
 
 
 
 beam_geometry_1 = {
         "length": [0, 10],
-        "z": [0,5],
+        "z": [0],
         "M": [10]
 }
 
