@@ -48,6 +48,7 @@ class Calculate_Q():
 
         self.overall_sum = 0
         self.Q_coordinates = []
+
         self.prepare_load()
         self.main_function()
         self.Q_coordinates = self.remove_duplicates()
@@ -107,11 +108,15 @@ class Calculate_Q():
         x = self.sorted_loads[self.key]["position"]
         F = self.sorted_loads[self.key]["amount"]
 
+        print(x, F)
+
         k1 = [x, self.overall_sum]
         k2 = [x, self.overall_sum + F]
         self.Q_coordinates.__iadd__([k1, k2])
         # self.Q_coordinates.__iadd__((k1, k2))
         self.overall_sum += F
+
+
 
     def type_q(self):
         x_start = self.sorted_loads[self.key]["position"][0]
@@ -132,6 +137,12 @@ class Calculate_Q():
     def return_Q_coord(self):
         return self.Q_coordinates
 
+
+Calculate_Q()
+
+
+#####################################################################################
+#####################################################################################
 
 
 class Calculate_M(Calculate_Q):

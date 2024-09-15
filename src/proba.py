@@ -1,16 +1,10 @@
 
 
 
-b = {
-        "length": [0, 10],
-        "z": [0, 10],
-        # "M": [10]
-}
+
+a = [1,4,2,6,55]
 
 
+for i,j in enumerate(a):
 
-
-n = len(b.get("z", [])) + len(b.get("M", []))  # n will be 5
-
-
-print(n)
+        print(i,j)
