@@ -18,12 +18,7 @@ class CalculateBeam(Prepare_Loads):
         self.matrix_sum = []  # Right-hand side (sums)
 
         # Calculate the equilibrium equations (force and moment) and solve
-        # self.f_values, self.f_locations = self.forces_equation()  # This adds the sum of forces first!
-        self.solution_matrix = self.equilibrium_equations()  # Then we add the moment equations
-
-
-        # Solve the system of equations
-        # self.result_f = self.calculate_matrix()
+        self.result_matrix = self.equilibrium_equations()  # Then we add the moment equations
 
         # Sort all loads including the reaction forces
         # self.all_sorted_loads = self.all_sorted_loads_f()
@@ -71,7 +66,6 @@ class CalculateBeam(Prepare_Loads):
                     m_eq[n] = dist
                 elif var_info["type"] == "M":  # Reaction force
                     m_eq[n] = 1
-
             matrix_eq.append(m_eq)
 
             for key, value in self.sorted_loads.items():
@@ -79,9 +73,7 @@ class CalculateBeam(Prepare_Loads):
                     sum_M_position -= value["value"] * (value["position"] - x_pos)
                 elif value["type"] == "q":
                     sum_M_position -= value["value"] * (value["x_F_eqv"] - x_pos)
-
             matrix_sum.append([sum_M_position])
-
 
         X, residuals, rank, s = np.linalg.lstsq(matrix_eq, matrix_sum, rcond=None)
 
@@ -89,18 +81,7 @@ class CalculateBeam(Prepare_Loads):
 
 
 
-
-    def calculate_matrix(self):
-        # Solve the system of linear equations Ax = B
-        matrix_eq_np = np.array(self.matrix_eq)
-        matrix_sum_np = np.array(self.matrix_sum)
-
-        # Solve using least squares (for overdetermined or exactly determined systems)
-        X, residuals, rank, s = np.linalg.lstsq(matrix_eq_np, matrix_sum_np, rcond=None)
-        print(f"Solved Forces and Moments: {X}")
-
-        return X
-
+    # OVO TREBA SREDIT, RAČUNANJE RADI, POTREBNO JOŠ SVE ISPITATI
 
     # Returns all forces: q, F, R
     def all_sorted_loads_f(self):
