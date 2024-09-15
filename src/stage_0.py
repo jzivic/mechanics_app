@@ -25,7 +25,7 @@ pozitivan moment je u desno, koji zatvara šaku
 loads_1 = {
         "L1": {"type": "F", "value": -10, "angle": 0, "position": 0},
         "L2": {"type": "q", "value": 10, "angle": 0, "position": [9,10]},
-        # "L3": {"type": "M", "value": -10, "angle": 0, "position": 0}
+        "L3": {"type": "M", "value": -10, "angle": 0, "position": 0}
 }
 
 

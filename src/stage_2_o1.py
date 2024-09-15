@@ -19,7 +19,8 @@ class CalculateBeam(Prepare_Loads):
 
         # Calculate the equilibrium equations (force and moment) and solve
         # self.f_values, self.f_locations = self.forces_equation()  # This adds the sum of forces first!
-        self.equilibrium_equations()  # Then we add the moment equations
+        self.solution_matrix = self.equilibrium_equations()  # Then we add the moment equations
+
 
         # Solve the system of equations
         # self.result_f = self.calculate_matrix()
@@ -61,17 +62,13 @@ class CalculateBeam(Prepare_Loads):
             sum_M_position = sum_M_extern
 
             m_eq = [None] * len(self.variables)  # Moment equation
-
             for n, (var_name, var_info) in enumerate(self.variables.items()):
                 if var_info["type"] == "F":  # Reaction force
                     dist = var_info["location"] - x_pos
                     m_eq[n] = dist  # Moment arm
-
-                elif var_info["type"] == "q":  # Reaction force
+                elif var_info["type"] == "q":
                     dist = var_info["x_F_ewv"] - x_pos
-                    m_eq[n] = dist  # Moment arm
-
-
+                    m_eq[n] = dist
                 elif var_info["type"] == "M":  # Reaction force
                     m_eq[n] = 1
 
@@ -80,19 +77,15 @@ class CalculateBeam(Prepare_Loads):
             for key, value in self.sorted_loads.items():
                 if value["type"] == "F":
                     sum_M_position -= value["value"] * (value["position"] - x_pos)
-
-                if value["type"] == "q":
+                elif value["type"] == "q":
                     sum_M_position -= value["value"] * (value["x_F_eqv"] - x_pos)
 
             matrix_sum.append([sum_M_position])
 
 
         X, residuals, rank, s = np.linalg.lstsq(matrix_eq, matrix_sum, rcond=None)
-        print(X)
 
-
-        # print(f"Matrix Eq: {self.matrix_eq}")
-        # print(f"Matrix Sum: {self.matrix_sum}")
+        return X
 
 
 
