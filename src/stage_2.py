@@ -86,9 +86,6 @@ class CalculateBeam(Prepare_Loads):
         return X
 
 
-
-    # OVO TREBA SREDIT, RAČUNANJE RADI, POTREBNO JOŠ SVE ISPITATI
-
     # Returns all forces: q, F, R
     def all_sorted_loads_f(self):
 

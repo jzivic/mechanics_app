@@ -1,28 +1,24 @@
-import math
-from stage_0 import *
-from stage_1 import *
+"""
+crtanje grafova q
+"""
+
+
 from stage_2 import *
-import numpy as np
-
-import matplotlib.pyplot as plt
 
 
-class Diagrams_forces:
+class Diagrams_forces(CalculateBeam):
 
-    def __init__(self, all_sorted_loads):
+    def __init__(self, load_dict, beam_geometry):
+        super().__init__(load_dict, beam_geometry)
 
-
-        for key, value in all_sorted_loads.items():
-
-            v = value["value"]
-            p = value["position"]
-
-            print(p, v, key)
+        self.proba()
 
 
+    def proba(self):
+        print(4)
 
 
-
+    TREBA SREDITI DIJELJENEJE q NA EKVIVALENTE KADA JE SILA IZMEĐU
 
 
 
@@ -32,9 +28,7 @@ class Diagrams_forces:
 
 
 if __name__ == "__main__":
-    processed_data = Prepare_Loads(loads_1).sorted_loads
-    all_sorted_loads = CalculateBeam(sorted_loads=processed_data).all_sorted_loads
 
+    Diagrams_forces(load_dict=loads_1, beam_geometry=beam_geometry_1)
 
-    Diagrams_forces(all_sorted_loads)
 
