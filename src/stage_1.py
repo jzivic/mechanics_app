@@ -36,6 +36,12 @@ class HelpF:
 
 
 
+
+
+
+
+
+
 class LinearEquation:
     def __init__(self, A, B, x):
         self.A = A
@@ -111,11 +117,19 @@ class Prepare_Loads:
 
         for key in q_loads:
             # dodaje se ekvivalentna sila koja može zamijeniti q, F_eqv, kao i njeno težište
+            # sorted_forces_loads[key]["F_eqv"], sorted_forces_loads[key]["x_F_eqv"] \
+            #     = HelpF.transfor_q_to_F(sorted_forces_loads[key])
+
+
             sorted_forces_loads[key]["F_eqv"], sorted_forces_loads[key]["x_F_eqv"] \
                 = HelpF.transfor_q_to_F(sorted_forces_loads[key])
 
+
+
             x_start = sorted_forces_loads[key]["position"][0]
             x_end = sorted_forces_loads[key]["position"][1]
+
+
 
             # if there is a F within q range, x_in_q will store the location
             x_in_q = [x_start]
@@ -134,6 +148,11 @@ class Prepare_Loads:
                 name = key + "_" + str(num)
                 dict_append[name] = q_org.copy()
                 dict_append[name]["position"] = range_q
+
+
+                dict_append[name]["F_eqv"] = (range_q[1] - range_q[0]) * dict_append[name]["value"]
+                dict_append[name]["x_F_eqv"] = range_q[0] + (range_q[1] - range_q[0]) / 2
+
                 num += 1
 
             sorted_forces_loads.pop(key)

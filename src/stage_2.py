@@ -24,6 +24,7 @@ class CalculateBeam(Prepare_Loads):
         self.all_sorted_loads = self.all_sorted_loads_f()
 
 
+        print(3)
 
 
 
@@ -40,9 +41,11 @@ class CalculateBeam(Prepare_Loads):
 
 
 
+    SAMO JOŠ OVO TREBA SREDITI I DRŽATI SE KONVENCIJE, NEGDJE KRIVO MNOŽI I ZBRAAJ MOMENTE
+
     def equilibrium_equations(self):
 
-        sum_f = -(sum([v["value"] for v in self.sorted_loads.values() if v["type"] == "F"]) +
+        sum_f = (sum([v["value"] for v in self.sorted_loads.values() if v["type"] == "F"]) +
                  sum([v["F_eqv"] for v in self.sorted_loads.values() if v["type"] == "q"]))
 
         matrix_sum = [[sum_f]]
