@@ -17,13 +17,6 @@ class HelpF:
     def __init__(self):
         ...
 
-    @staticmethod
-    def decompose_force(f_value, f_angle):
-        f_y = - f_value * math.cos(math.radians(f_angle))
-        f_x = - f_value * math.sin(math.radians(f_angle))
-
-        return f_x, f_y
-
     # continues load will be constant for now
     @staticmethod
     def transfor_q_to_F(q: dict):
@@ -32,6 +25,11 @@ class HelpF:
         w_c = (x1 + x2) / 2                 # weight center
 
         return f, w_c
+
+
+    @staticmethod
+    def force_in_q(self):
+        print(3)
 
 
 
@@ -113,23 +111,20 @@ class Prepare_Loads:
             x[1]["position"][0] if x[1]["type"] == "q" else x[1]["position"]))
 
         f_loads = {key: value for key, value in sorted_forces_loads.items() if value.get("type") == "F"}
+
+
+
+
+        # OVO TREBA RASPISAT U FUNCKIJU I ISKORISTIT U stage_3
         q_loads = {key: value for key, value in sorted_forces_loads.items() if value.get("type") == "q"}
 
         for key in q_loads:
             # dodaje se ekvivalentna sila koja može zamijeniti q, F_eqv, kao i njeno težište
-            # sorted_forces_loads[key]["F_eqv"], sorted_forces_loads[key]["x_F_eqv"] \
-            #     = HelpF.transfor_q_to_F(sorted_forces_loads[key])
-
-
             sorted_forces_loads[key]["F_eqv"], sorted_forces_loads[key]["x_F_eqv"] \
                 = HelpF.transfor_q_to_F(sorted_forces_loads[key])
 
-
-
             x_start = sorted_forces_loads[key]["position"][0]
             x_end = sorted_forces_loads[key]["position"][1]
-
-
 
             # if there is a F within q range, x_in_q will store the location
             x_in_q = [x_start]
@@ -148,11 +143,8 @@ class Prepare_Loads:
                 name = key + "_" + str(num)
                 dict_append[name] = q_org.copy()
                 dict_append[name]["position"] = range_q
-
-
                 dict_append[name]["F_eqv"] = (range_q[1] - range_q[0]) * dict_append[name]["value"]
                 dict_append[name]["x_F_eqv"] = range_q[0] + (range_q[1] - range_q[0]) / 2
-
                 num += 1
 
             sorted_forces_loads.pop(key)

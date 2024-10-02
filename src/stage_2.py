@@ -1,10 +1,6 @@
-import sympy
-from numpy.ma.testutils import fail_if_equal
-
-from stage_0 import *
 from stage_1 import *
-
 import numpy as np
+
 
 class CalculateBeam(Prepare_Loads):
     def __init__(self, load_dict, beam_geometry):
@@ -21,10 +17,9 @@ class CalculateBeam(Prepare_Loads):
         self.result_matrix = self.equilibrium_equations()  # Then we add the moment equations
 
         # Sort all loads including the reaction forces
-        self.all_sorted_loads = self.all_sorted_loads_f()
+        self.output_sorted_loads = self.output_sorted_loads_f()
 
 
-        print(3)
 
 
 
@@ -41,17 +36,15 @@ class CalculateBeam(Prepare_Loads):
 
 
 
-    SAMO JOŠ OVO TREBA SREDITI I DRŽATI SE KONVENCIJE, NEGDJE KRIVO MNOŽI I ZBRAAJ MOMENTE
 
     def equilibrium_equations(self):
 
         sum_f = (sum([v["value"] for v in self.sorted_loads.values() if v["type"] == "F"]) +
                  sum([v["F_eqv"] for v in self.sorted_loads.values() if v["type"] == "q"]))
 
-        matrix_sum = [[sum_f]]
+        matrix_sum = [[-sum_f]]
 
-        # PRVO IDE JEDNADŽBA SILA
-        f_eq = [1 for v in self.variables.values() if v["type"] == "F"]
+        f_eq = [1 for v in self.variables.values() if v["type"] == "F"]   # JEDNADŽBA SILA
         f_eq.extend([0 for v in self.variables.values() if v["type"] == "M"])
         matrix_eq = [f_eq]
 
@@ -76,27 +69,28 @@ class CalculateBeam(Prepare_Loads):
 
             for key, value in self.sorted_loads.items():
                 if value["type"] == "F":
-                    sum_M_position -= value["value"] * (value["position"] - x_pos)
+                    sum_M_position += value["value"] * (value["position"] - x_pos)
                 elif value["type"] == "q":
-                    sum_M_position -= value["value"] * (value["x_F_eqv"] - x_pos)
-            matrix_sum.append([sum_M_position])
+                    sum_M_position += value["F_eqv"] * (value["x_F_eqv"] - x_pos)
+            matrix_sum.append([-sum_M_position])
 
         X, residuals, rank, s = np.linalg.lstsq(matrix_eq, matrix_sum, rcond=None)
 
         for n, key in enumerate(self.variables):
             self.variables[key]['value'] = X[n][0]
+        # self.variables = {key: {**self.variables[key], 'value': X[n][0]} for n, key in enumerate(self.variables)}
 
         return X
 
 
     # Returns all forces: q, F, R
-    def all_sorted_loads_f(self):
+    def output_sorted_loads_f(self):
 
         all_loads = self.sorted_loads | self.variables
-        sorted_loads = dict(sorted(all_loads.items(),
+        output_sorted_loads = dict(sorted(all_loads.items(),
             key=lambda x: x[1]["position"][0] if x[1]["type"] == "q" else x[1]["position"]))
 
-        return sorted_loads
+        return output_sorted_loads
 
 
 
