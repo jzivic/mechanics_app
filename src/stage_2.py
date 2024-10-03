@@ -39,8 +39,8 @@ class CalculateBeam(Prepare_Loads):
 
     def equilibrium_equations(self):
 
-        sum_f = (sum([v["value"] for v in self.sorted_loads.values() if v["type"] == "F"]) +
-                 sum([v["F_eqv"] for v in self.sorted_loads.values() if v["type"] == "q"]))
+        sum_f = (sum([v["value"] for v in self.sorted_loads_specified.values() if v["type"] == "F"]) +
+                 sum([v["F_eqv"] for v in self.sorted_loads_specified.values() if v["type"] == "q"]))
 
         matrix_sum = [[-sum_f]]
 
@@ -49,7 +49,7 @@ class CalculateBeam(Prepare_Loads):
         matrix_eq = [f_eq]
 
         # MOMNENTNA JEDNADŽBA
-        sum_M_extern = -sum(v["value"] for v in self.sorted_loads.values() if v["type"] == "M")
+        sum_M_extern = -sum(v["value"] for v in self.sorted_loads_specified.values() if v["type"] == "M")
         m_locations = [var["position"] for var in self.variables.values() if var["type"] == "F"]
 
         for x_pos in m_locations:
@@ -67,7 +67,7 @@ class CalculateBeam(Prepare_Loads):
                     m_eq[n] = 1
             matrix_eq.append(m_eq)
 
-            for key, value in self.sorted_loads.items():
+            for key, value in self.sorted_loads_specified.items():
                 if value["type"] == "F":
                     sum_M_position += value["value"] * (value["position"] - x_pos)
                 elif value["type"] == "q":
@@ -86,7 +86,7 @@ class CalculateBeam(Prepare_Loads):
     # Returns all forces: q, F, R
     def output_sorted_loads_f(self):
 
-        all_loads = self.sorted_loads | self.variables
+        all_loads = self.sorted_loads_specified | self.variables
         output_sorted_loads = dict(sorted(all_loads.items(),
             key=lambda x: x[1]["position"][0] if x[1]["type"] == "q" else x[1]["position"]))
 
