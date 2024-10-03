@@ -4,6 +4,8 @@ crtanje grafova q
 
 
 import matplotlib.pyplot as plt
+from matplotlib.pyplot import colorbar
+
 from stage_2 import *
 
 
@@ -44,42 +46,20 @@ class Diagrams_forces(CalculateBeam):
 
     def plot_graph(self):
 
+        plt.figure(dpi=200)
 
-        plt.plot(self.q_coords["z"], self.q_coords["q"])
+        plt.plot(self.beam_geometry["length"], [0,0], color='black', linewidth=5)
+
+        plt.plot(self.q_coords["z"], self.q_coords["q"], linewidth=1.5)
+        plt.fill_between(self.q_coords["z"], self.q_coords["q"], color='blue', alpha=0.3, hatch='|', edgecolor='black')
+
+
+        plt.xlabel('z [m]')
+        plt.ylabel('F [N]')
+        plt.title('Load Diagram')
+
 
         plt.show()
-
-
-
-        # Plot the beam as a thick black line
-        beam_length = self.beam_geometry["length"][-1]
-
-
-
-
-
-
-# Increase the figure size to make the diagram larger
-#         plt.figure(figsize=(12, 8))
-#
-#
-#
-#         # Plot the q load diagram
-#         z = self.q_coords["z"]
-#         q = self.q_coords["q"]
-#         plt.plot(z, q, label='q load')
-#
-#         # Annotate each point with its (z, q) coordinates
-#         for i, txt in enumerate(q):
-#             plt.annotate(f'({z[i]}, {txt})', (z[i], q[i]))
-#
-#         plt.ylabel('Load (q)')
-#         plt.title('Load Diagram')
-#         plt.legend()
-#
-#         plt.show()
-#
-
 
 
 

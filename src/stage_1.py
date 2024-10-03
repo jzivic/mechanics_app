@@ -6,8 +6,6 @@ Stage 1 je dio koji će učitavati sile u neki riječnik gdje će biti svi podac
 
 """
 
-import math
-from venv import logger
 
 from stage_0 import *
 
